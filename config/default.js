@@ -1,0 +1,7 @@
+module.exports = {
+  port: 3000,
+  router: `${__dirname}/../src/routers/web.js`,
+  viewFolder: `${__dirname}/../src/apps/views`,
+  viewEngine: 'ejs',
+  staticFolder: `${__dirname}/../src/public`,
+};

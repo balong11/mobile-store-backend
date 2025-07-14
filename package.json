@@ -1,0 +1,21 @@
+{
+  "name": "mobile-store-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --watch ./src/bin/www.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "config": "^4.0.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "mongoose": "^6.13.8"
+  }
+}
