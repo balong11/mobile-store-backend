@@ -1,11 +1,15 @@
 const mongoose = require("../../commom/database")();
 const categorySchema = new mongoose.Schema(
   {
-    name: {
+    title: {
       type: String,
       required: true,
     },
-
+    description: {
+      type: String,
+      required: true,
+    },
+   
   },
   {
     timestamps: true,
