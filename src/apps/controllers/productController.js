@@ -4,7 +4,7 @@ exports.index = async (req, res) => {
   return res.render("admin/products/product", { products });
 };
 exports.create = (req, res) => {
-  res.send("admin/products/product-add");
+  return res.send("admin/products/product-add");
 };
 exports.edit = (req, res) => {
   res.send("admin/products/edit");
