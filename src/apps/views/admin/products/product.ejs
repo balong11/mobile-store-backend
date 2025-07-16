@@ -61,11 +61,15 @@
                     <div class="panel-footer">
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                                <% if (page > 1) { %>
+                                    <li class="page-item"><a class="page-link" href="/admin/products?page=<%= prev %>">&laquo;</a></li>
+                                <% } %>
+                                <% for (let page of paginate) { %>
+                                    <li class="page-item <%= page == page ? 'active' : '' %>"><a class="page-link" href="/admin/products?page=<%= page %>"><%= page %></a></li>
+                                <% } %>
+                                <% if (page < totalPage) { %>
+                                    <li class="page-item"><a class="page-link" href="/admin/products?page=<%= next %>">&raquo;</a></li>
+                                <% } %>
                             </ul>
                         </nav>
                     </div>

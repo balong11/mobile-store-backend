@@ -4,4 +4,6 @@ module.exports = {
   viewFolder: `${__dirname}/../src/apps/views`,
   viewEngine: 'ejs',
   staticFolder: `${__dirname}/../src/public`,
+  limit: 10,
+  delta: 2,
 };
