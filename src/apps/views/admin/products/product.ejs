@@ -64,8 +64,14 @@
                                 <% if (page > 1) { %>
                                     <li class="page-item"><a class="page-link" href="/admin/products?page=<%= prev %>">&laquo;</a></li>
                                 <% } %>
-                                <% for (let page of paginate) { %>
-                                    <li class="page-item <%= page == page ? 'active' : '' %>"><a class="page-link" href="/admin/products?page=<%= page %>"><%= page %></a></li>
+                                <% for (let p of paginate) { %>
+                                    <% if (p === '...') { %>
+                                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                                    <% } else { %>
+                                        <li class="page-item <%= p == page ? 'active' : '' %>">
+                                            <a class="page-link" href="/admin/products?page=<%= p %>"><%= p %></a>
+                                        </li>
+                                    <% } %>
                                 <% } %>
                                 <% if (page < totalPage) { %>
                                     <li class="page-item"><a class="page-link" href="/admin/products?page=<%= next %>">&raquo;</a></li>
