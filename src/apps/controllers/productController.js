@@ -11,10 +11,12 @@ exports.index = async (req, res) => {
 
   return res.render("admin/products/product", { 
     products, 
+    page,
     paginate: paginate(totalRows, page, limit), 
     prev: page - 1, 
     next: page + 1,
-    totalPage
+    totalPage: totalPage
+    
   });
 };
 exports.create = (req, res) => {
