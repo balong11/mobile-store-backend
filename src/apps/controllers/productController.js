@@ -3,10 +3,10 @@ const ProductModel = require("../models/Product");
 const paginate = require("../../commom/paginate");
 exports.index = async (req, res) => {
   const limit = config.limit;
-  const page = req.query.page || 1;
+  const page = parseInt(req.query.page) || 1;
   const skip = page * limit - limit;
-  const totalPage = Math.ceil(totalRows / limit);
   const totalRows = await ProductModel.countDocuments();
+  const totalPage = Math.ceil(totalRows / limit);
   const products = await ProductModel.find().populate({ path: "cat_id" }).sort({ _id: -1 }).skip(skip).limit(limit);
 
   return res.render("admin/products/product", { 
