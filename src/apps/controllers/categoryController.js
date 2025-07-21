@@ -1,6 +1,6 @@
 const CategoryModel = require("../models/Category");
 exports.index = async (req, res) => {
-  const categorys = await CategoryModel.find().populate(); 
+  const categorys = await CategoryModel.find(); 
   return res.render("admin/categorys/category", {categorys});
 };
 exports.create = (req, res) => {

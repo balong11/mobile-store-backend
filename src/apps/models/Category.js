@@ -5,19 +5,16 @@ const categorySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    description: {
+    slug: {
       type: String,
       required: true,
     },
-    slug: {
+    description: {
       type: String,
-      required: true
-    }
-   
+      default: null,
+    },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 const categoryModel = mongoose.model(

@@ -13,12 +13,14 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      default: "user",
+      default: "member",
+    },
+    full_name: {
+      type: String,
+      default: null,
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 // Tạo model user từ bản thiết kế

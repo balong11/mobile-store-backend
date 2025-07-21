@@ -19,7 +19,7 @@
 			</div>
 		</div><!--/.row-->
 		<div id="toolbar" class="btn-group">
-            <a href="/admin/categories/add_category" class="btn btn-success">
+            <a href="/admin/categories/create" class="btn btn-success">
                 <i class="glyphicon glyphicon-plus"></i> Thêm danh mục
             </a>
         </div>
@@ -41,8 +41,8 @@
 									<tbody>
 										<% for (let category of categorys) { %>
 											<tr>
-												<td style="">1</td>
-												<td style=""><% category.title %></td>
+												<td style=""><%= category._id %></td>
+												<td style=""><%= category.title %></td>
 												<td class="form-group">
 													<a href="/admin/categories/edit/<%= category._id %>" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i></a>
 													<a href="/admin/categories/delete/<%= category._id %>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
