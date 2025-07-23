@@ -2,11 +2,12 @@ const express = require('express');
 const router = express.Router();
 const AuthController = require("../apps/controllers/AuthController.js");
 const AdminController = require("../apps/controllers/AdminController.js");
-const ProductController = require("../apps/controllers/ProductController.js");
+const ProductController = require("../apps/controllers/productController.js");
 const UserController = require("../apps/controllers/UserController.js");
 const CategoryController = require("../apps/controllers/categoryController.js");
 const TestController = require("../apps/controllers/test.js");
 const AuthMiddleware = require("../apps/middlewares/auth.js");
+const uploadMiddleware = require("../apps/middlewares/upload.js");
 
 
 //test
@@ -25,6 +26,8 @@ router.get("/admin/dashboard",AuthMiddleware.checkAdmin, AdminController.dashboa
 // Product
 router.get("/admin/products",AuthMiddleware.checkAdmin, ProductController.index);
 router.get("/admin/products/create",AuthMiddleware.checkAdmin, ProductController.create);
+//them moi thanh cong
+router.post("/admin/products/store",AuthMiddleware.checkAdmin,uploadMiddleware.single("thumbnail") , ProductController.store);
 router.get("/admin/products/edit/:id",AuthMiddleware.checkAdmin, ProductController.edit);
 router.get("/admin/products/delete/:id",AuthMiddleware.checkAdmin, ProductController.delete);
 
