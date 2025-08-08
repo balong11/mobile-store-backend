@@ -26,9 +26,9 @@ router.get("/admin/dashboard",AuthMiddleware.checkAdmin, AdminController.dashboa
 // Product
 router.get("/admin/products",AuthMiddleware.checkAdmin, ProductController.index);
 router.get("/admin/products/create",AuthMiddleware.checkAdmin, ProductController.create);
-//them moi thanh cong
 router.post("/admin/products/store",AuthMiddleware.checkAdmin,uploadMiddleware.single("thumbnail") , ProductController.store);
 router.get("/admin/products/edit/:id",AuthMiddleware.checkAdmin, ProductController.edit);
+router.post("/admin/products/update/:id",AuthMiddleware.checkAdmin, uploadMiddleware.single("thumbnail"), ProductController.update);
 router.get("/admin/products/delete/:id",AuthMiddleware.checkAdmin, ProductController.delete);
 
 // User

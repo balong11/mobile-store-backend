@@ -24,10 +24,12 @@ exports.index = async (req, res) => {
     
   });
 };
+
 exports.create = async (req, res) => {
   const categories = await categoryModel.find().sort({ _id: 1 });
   return res.render("admin/products/add", { categories } );
 };
+  
 exports.store = async (req, res) => {
   const body = req.body;
 const file = req.file;
@@ -56,9 +58,45 @@ if(file){
 }	
 
 };
-exports.edit = (req, res) => {
-  res.send("admin/products/edit");
+exports.edit = async (req, res) => {
+  const id = req.params.id;
+  const categories = await categoryModel.find().sort({ _id: 1 });
+  const product = await ProductModel.findById(id).populate('cat_id');
+  return res.render("admin/products/edit", { product, categories });
 };
-exports.delete = (req, res) => {
-  res.send("admin/products/delete");
+exports.update = async (req, res) => {
+  const id = req.params.id;
+  const body = req.body;
+  const file = req.file;
+
+  const product = {
+    name: body.name,
+    slug: slug(body.name),
+    price: body.price,
+    warranty: body.warranty,
+    accessories: body.accessories,
+    promotion: body.promotion,
+    status: body.status,
+    cat_id: body.cat_id,
+    is_stock: body.is_stock,
+    featured: body.featured === "on" || false,
+    description: body.description,
+  };
+
+  if (file) {
+    const originalname = file.originalname;
+    const thumbnail = `products/${originalname}`;
+    // di chuyển ảnh từ thư mục tạm về thư mục upload/products
+    fs.renameSync(file.path, `${config.uploads}/${thumbnail}`);
+    product["thumbnail"] = thumbnail;
+  }
+
+  await ProductModel.updateOne({ _id: id}, product);  
+  res.redirect("/admin/products");
+};
+
+exports.delete = async (req, res) => {
+  const id = req.params.id;
+  await ProductModel.deleteOne({ _id: id });
+  res.redirect("/admin/products");
 };
