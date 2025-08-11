@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const AuthController = require("../apps/controllers/authController.js");
+const AuthController = require("../apps/controllers/AuthController.js");
 const AdminController = require("../apps/controllers/adminController.js");
 const ProductController = require("../apps/controllers/productController.js");
 const UserController = require("../apps/controllers/userController.js");
 const CategoryController = require("../apps/controllers/categoryController.js");
 const adsController = require("../apps/controllers/adsController.js");
+const CommentController = require("../apps/controllers/commentController.js");
 const TestController = require("../apps/controllers/test.js");
 const AuthMiddleware = require("../apps/middlewares/auth.js");
 const uploadMiddleware = require("../apps/middlewares/upload.js");
@@ -60,5 +61,10 @@ router.post("/admin/ads/store",AuthMiddleware.checkAdmin, adsController.store);
 router.post("/admin/ads/update/:id",AuthMiddleware.checkAdmin, adsController.update);
 router.get("/admin/ads/edit/:id",AuthMiddleware.checkAdmin, adsController.edit);
 router.post("/admin/ads/delete/:id",AuthMiddleware.checkAdmin, adsController.delete);
+
+// comments
+router.get("/admin/comments", AuthMiddleware.checkAdmin, CommentController.index);
+router.post("/admin/comments/toggle/:id", AuthMiddleware.checkAdmin, CommentController.toggleStatus);
+router.post("/admin/comments/delete/:id", AuthMiddleware.checkAdmin, CommentController.delete);
 
 module.exports = router;
