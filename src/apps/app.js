@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require("body-parser");
+const cookieParser = require('cookie-parser');
 const config = require('config');
 const userContext = require('./middlewares/userContext');
 const app = express();
@@ -8,6 +9,9 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Thêm cookie-parser middleware
+app.use(cookieParser());
 
 app.use("/static", express.static(config.get('staticFolder')))
 

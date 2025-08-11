@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const AuthController = require("../apps/controllers/AuthController.js");
+const AuthController = require("../apps/controllers/authController.js");
 const AdminController = require("../apps/controllers/adminController.js");
 const ProductController = require("../apps/controllers/productController.js");
 const UserController = require("../apps/controllers/userController.js");
 const CategoryController = require("../apps/controllers/categoryController.js");
 const adsController = require("../apps/controllers/adsController.js");
 const CommentController = require("../apps/controllers/commentController.js");
+const ConfigController = require("../apps/controllers/configController.js");
 const TestController = require("../apps/controllers/test.js");
 const AuthMiddleware = require("../apps/middlewares/auth.js");
 const uploadMiddleware = require("../apps/middlewares/upload.js");
@@ -66,5 +67,17 @@ router.post("/admin/ads/delete/:id",AuthMiddleware.checkAdmin, adsController.del
 router.get("/admin/comments", AuthMiddleware.checkAdmin, CommentController.index);
 router.post("/admin/comments/toggle/:id", AuthMiddleware.checkAdmin, CommentController.toggleStatus);
 router.post("/admin/comments/delete/:id", AuthMiddleware.checkAdmin, CommentController.delete);
+
+// Config
+router.get("/admin/configs", AuthMiddleware.checkAdmin, ConfigController.getAllConfigs);
+router.get("/admin/configs/add", AuthMiddleware.checkAdmin, ConfigController.showAddForm);
+router.post("/admin/configs/add", AuthMiddleware.checkAdmin, uploadMiddleware.single("logo"), ConfigController.addConfig);
+router.get("/admin/configs/edit/:id", AuthMiddleware.checkAdmin, ConfigController.showEditForm);
+router.post("/admin/configs/edit/:id", AuthMiddleware.checkAdmin, uploadMiddleware.single("logo"), ConfigController.updateConfig);
+router.post("/admin/configs/delete/:id", AuthMiddleware.checkAdmin, ConfigController.deleteConfig);
+router.post("/admin/configs/toggle-status/:id", AuthMiddleware.checkAdmin, ConfigController.toggleStatus);
+
+// API Config
+router.get("/api/config", ConfigController.getCurrentConfig);
 
 module.exports = router;
