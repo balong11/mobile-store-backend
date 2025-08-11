@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const bodyParser = require("body-parser");
 const config = require('config');
+const userContext = require('./middlewares/userContext');
 const app = express();
 
 
@@ -19,11 +20,8 @@ app.set('trust proxy', 1); // trust first proxy
 //config session
 app.use(session(config.get('session')));
 
-
-
-
-
-
+// Middleware để tự động thêm thông tin user vào tất cả requests
+app.use(userContext);
 
 //routers
 app.use(require(config.get('router')));

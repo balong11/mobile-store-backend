@@ -5,7 +5,6 @@ const categoryModel = require("../models/Category");
 const slug = require("slug");
 const fs = require("fs");
 
-
 exports.index = async (req, res) => {
   const limit = config.limit;
   const page = parseInt(req.query.page) || 1;
@@ -20,50 +19,55 @@ exports.index = async (req, res) => {
     paginate: paginate(totalRows, page, limit), 
     prev: page - 1, 
     next: page + 1,
-    totalPage: totalPage
-    
+    totalPage: totalPage,
+    currentPage: 'products'
   });
 };
 
 exports.create = async (req, res) => {
   const categories = await categoryModel.find().sort({ _id: 1 });
-  return res.render("admin/products/add", { categories } );
+  
+  return res.render("admin/products/add", { categories, currentPage: 'products' });
 };
   
 exports.store = async (req, res) => {
   const body = req.body;
-const file = req.file;
+  const file = req.file;
 
-const product = {
-	name: body.name,
-  slug: slug(body.name),
-  price: body.price,
-  warranty: body.warranty,
-  accessories: body.accessories,
-  promotion: body.promotion,
-  status: body.status,
-  cat_id: body.cat_id,
-  is_stock: body.is_stock,
-  featured: body.featured === "on" || false,
-  description: body.description,
+  const product = {
+    name: body.name,
+    slug: slug(body.name),
+    price: body.price,
+    warranty: body.warranty,
+    accessories: body.accessories,
+    promotion: body.promotion,
+    status: body.status,
+    cat_id: body.cat_id,
+    is_stock: body.is_stock,
+    featured: body.featured === "on" || false,
+    description: body.description,
+  };
+  
+  if (file) {
+    const originalname = file.originalname;
+    const thumbnail = `products/${originalname}`;
+    // di chuyển ảnh từ thư mục tạm về thư mục upload/products
+    fs.renameSync(file.path, `${config.uploads}/${thumbnail}`);
+    product["thumbnail"] = thumbnail;
+  }
+  
+  await new ProductModel(product).save();
+  res.redirect("/admin/products");
 };
-if(file){
-	const originalname = file.originalname;
-  const thumbnail = `products/${originalname}`;
-  // di chuyển ảnh từ thư mục tạm về thư mục upload/products
-	fs.renameSync(file.path, `${config.uploads}/${thumbnail}`);
-	product["thumbnail"] = thumbnail;
-	await new ProductModel(product).save();
-	res.redirect("/admin/products");
-}	
 
-};
 exports.edit = async (req, res) => {
   const id = req.params.id;
   const categories = await categoryModel.find().sort({ _id: 1 });
   const product = await ProductModel.findById(id).populate('cat_id');
-  return res.render("admin/products/edit", { product, categories });
+  
+  return res.render("admin/products/edit", { product, categories, currentPage: 'products' });
 };
+
 exports.update = async (req, res) => {
   const id = req.params.id;
   const body = req.body;

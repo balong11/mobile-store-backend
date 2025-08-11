@@ -565,12 +565,20 @@ a.bg-danger:hover {
 	background-color: #e9ecf2;
 }
 
-.sidebar ul.nav .active a, .sidebar ul.nav li.parent a.active,
-.sidebar ul.nav .active > a:hover, .sidebar ul.nav li.parent a.active:hover,
-.sidebar ul.nav .active > a:focus, .sidebar ul.nav li.parent a.active:focus {
-	color: #fff;
+.sidebar ul.nav .active a, 
+.sidebar ul.nav li.parent a.active,
+.sidebar ul.nav .active > a:hover, 
+.sidebar ul.nav li.parent a.active:hover,
+.sidebar ul.nav .active > a:focus, 
+.sidebar ul.nav li.parent a.active:focus {
+	color: #fff !important;
 	background-color: #30a5ff;
-}*/
+}
+
+.sidebar ul.nav .active a svg,
+.sidebar ul.nav li.parent a.active svg {
+	fill: #fff;
+}
 
 .sidebar ul.nav ul,
 .sidebar ul.nav ul li {
@@ -603,6 +611,31 @@ a.bg-danger:hover {
 	line-height: 40px;
 }
 
+.sidebar ul.nav li a {
+	display: block;
+	padding: 15px 20px;
+	color: #30a5ff;
+	text-decoration: none;
+	transition: all 0.3s ease;
+}
+
+.sidebar ul.nav li a:hover {
+	background-color: #e9ecf2;
+	color: #30a5ff;
+}
+
+.sidebar ul.nav li.active a {
+	background-color: #30a5ff;
+	color: #fff !important;
+}
+
+.sidebar ul.nav li.active a svg {
+	fill: #fff;
+}
+
+.sidebar ul.nav li.active a svg use {
+	fill: #fff;
+}
 
 .sidebar span.glyphicon {
 	margin-right: 10px;
@@ -930,7 +963,41 @@ h1.page-header {
 }
 
 
+/* Footer */
+.footer {
+    background-color: #07090c;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    z-index: 1000;
+}
 
+.footer p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.footer .copyright {
+    color: #ecf0f1;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.footer .developed-by {
+    color: #bdc3c7;
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+/* Đảm bảo content không bị che bởi footer */
+.main {
+    margin-bottom: 80px;
+}
 
 
 

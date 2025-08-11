@@ -8,7 +8,7 @@
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
 		<div class="row">
 			<ol class="breadcrumb">
-				<li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+				<li><a href="/admin/dashboard"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
 				<li class="active">Quản lý danh mục</li>
 			</ol>
 		</div><!--/.row-->
@@ -45,7 +45,11 @@
 												<td style=""><%= category.title %></td>
 												<td class="form-group">
 													<a href="/admin/categories/edit/<%= category._id %>" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i></a>
-													<a href="/admin/categories/delete/<%= category._id %>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+													<form action="/admin/categories/delete/<%= category._id %>" method="POST" style="display: inline;">
+														<button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục này?')">
+															<i class="glyphicon glyphicon-remove"></i>
+														</button>
+													</form>
 												</td>
 											</tr>
 										<% } %>
@@ -56,11 +60,21 @@
 							<div class="panel-footer">
 								<nav aria-label="Page navigation example">
 									<ul class="pagination">
-										<li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-										<li class="page-item"><a class="page-link" href="#">1</a></li>
-										<li class="page-item"><a class="page-link" href="#">2</a></li>
-										<li class="page-item"><a class="page-link" href="#">3</a></li>
-										<li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+										<% if (page > 1) { %>
+                                    <li class="page-item"><a class="page-link" href="/admin/categories?page=<%= prev %>">&laquo;</a></li>
+                                <% } %>
+                                <% for (let p of paginate) { %>
+                                    <% if (p === '...') { %>
+                                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                                    <% } else { %>
+                                        <li class="page-item <%= p == page ? 'active' : '' %>">
+                                            <a class="page-link" href="/admin/categories?page=<%= p %>"><%= p %></a>
+                                        </li>
+                                    <% } %>
+                                <% } %>
+                                <% if (page < totalPage) { %>
+                                        <li class="page-item"><a class="page-link" href="/admin/categories?page=<%= next %>">&raquo;</a></li>
+                                <% } %>
 									</ul>
 								</nav>
 							</div>
@@ -72,6 +86,5 @@
 	<script src="js/jquery-1.11.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap-table.js"></script>	
-</body>
-
-</html>
+	
+<%- include('../layout/footer') %>

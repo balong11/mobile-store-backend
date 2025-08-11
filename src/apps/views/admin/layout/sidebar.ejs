@@ -5,13 +5,41 @@
       </div>
     </form>
     <ul class="nav menu">
-      <li class="active"><a href="/admin/dashboard"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
-      <li><a href="/admin/users"><svg class="glyph stroked male user "><use xlink:href="#stroked-male-user"/></svg>Quản lý thành viên</a></li>
-      <li><a href="/admin/categories"><svg class="glyph stroked open folder"><use xlink:href="#stroked-open-folder"/></svg>Quản lý danh mục</a></li>
-      <li><a href="/admin/products"><svg class="glyph stroked bag"><use xlink:href="#stroked-bag"></use></svg>Quản lý sản phẩm</a></li>
-      <li><a href="/admin/comments"><svg class="glyph stroked two messages"><use xlink:href="#stroked-two-messages"/></svg> Quản lý bình luận</a></li>
-      <li><a href="/admin/ads"><svg class="glyph stroked chain"><use xlink:href="#stroked-chain"/></svg> Quản lý quảng cáo</a></li>
-      <li><a href="/admin/settings"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"/></svg> Cấu hình</a></li>
+      <li class="<%= typeof currentPage !== 'undefined' && currentPage === 'dashboard' ? 'active' : '' %>">
+        <a href="/admin/dashboard">
+          <svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard
+        </a>
+      </li>
+      <li class="<%= typeof currentPage !== 'undefined' && currentPage === 'users' ? 'active' : '' %>">
+        <a href="/admin/users">
+          <svg class="glyph stroked male user"><use xlink:href="#stroked-male-user"/></svg>Quản lý thành viên
+        </a>
+      </li>
+      <li class="<%= typeof currentPage !== 'undefined' && currentPage === 'categories' ? 'active' : '' %>">
+        <a href="/admin/categories">
+          <svg class="glyph stroked open folder"><use xlink:href="#stroked-open-folder"/></svg>Quản lý danh mục
+        </a>
+      </li>
+      <li class="<%= typeof currentPage !== 'undefined' && currentPage === 'products' ? 'active' : '' %>">
+        <a href="/admin/products">
+          <svg class="glyph stroked bag"><use xlink:href="#stroked-bag"></use></svg> Quản lý sản phẩm
+        </a>
+      </li>
+      <li class="<%= typeof currentPage !== 'undefined' && currentPage === 'comments' ? 'active' : '' %>">
+        <a href="/admin/comments">
+          <svg class="glyph stroked two messages"><use xlink:href="#stroked-two-messages"/></svg> Quản lý bình luận
+        </a>
+      </li>
+      <li class="<%= typeof currentPage !== 'undefined' && currentPage === 'ads' ? 'active' : '' %>">
+        <a href="/admin/ads">
+          <svg class="glyph stroked chain"><use xlink:href="#stroked-chain"/></svg> Quản lý quảng cáo
+        </a>
+      </li>
+      <li class="<%= typeof currentPage !== 'undefined' && currentPage === 'settings' ? 'active' : '' %>">
+        <a href="/admin/settings">
+          <svg class="glyph stroked gear"><use xlink:href="#stroked-gear"/></svg> Cấu hình
+        </a>
+      </li>
     </ul>
   </div>
   

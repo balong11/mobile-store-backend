@@ -10,13 +10,21 @@
         <a class="navbar-brand" href="/admin/dashboard"><span>Long</span>Shop</a>
         <ul class="user-menu">
           <li class="dropdown pull-right">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <a href="/admin/users" class="dropdown-toggle" data-toggle="dropdown">
               <svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg>
-              Admin <span class="caret"></span>
+              <% if (isAuthenticated && user && user.full_name) { %>
+                <%= user.full_name %> <span class="caret"></span>
+              <% } else { %>
+                User <span class="caret"></span>
+              <% } %>
             </a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="/admin/users"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Hồ sơ</a></li>
-              <li><a href="/admin/logout"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Đăng xuất</a></li>
+              <% if (isAuthenticated) { %>
+                <li><a href="/admin/users"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Hồ sơ</a></li>
+                <li><a href="/admin/logout"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Đăng xuất</a></li>
+              <% } else { %>
+                <li><a href="/admin/login"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Đăng nhập</a></li>
+              <% } %>
             </ul>
           </li>
         </ul>
