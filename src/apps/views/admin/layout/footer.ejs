@@ -2,7 +2,10 @@
 
 <footer class="footer">
     <div class="container">
-        <p>2025 © Long Shop. All rights reserved.</p>
-        <p class="developed-by">Developed by Long Shop.</p>
+        <% if (setting && setting.footer_text) { %>
+            <p><%= setting.footer_text %></p>
+        <% } else { %>
+            <p>2025 © Long Shop. All rights reserved.</p>
+        <% } %>
     </div>
 </footer>

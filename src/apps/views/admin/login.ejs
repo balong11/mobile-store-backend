@@ -23,7 +23,22 @@
 									<input name="rememberMe" type="checkbox" value="1" <%= (rememberEmail && rememberPassword) ? 'checked' : '' %>>Ghi nhớ tài khoản
 								</label>
 							</div>
-							<button type="submit" class="btn btn-primary">Đăng nhập</button>
+                            <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                            <% if (hasGoogle || hasFacebook) { %>
+                              <div class="text-center" style="margin:15px 0 8px; color:#777;">Hoặc đăng nhập bằng</div>
+                              <div class="text-center">
+                                <% if (hasFacebook) { %>
+                                  <a href="/auth/facebook" title="Facebook" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:#1877F2;color:#fff;margin:0 6px;text-decoration:none;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.675 0h-21.35C.595 0 0 .595 0 1.326v21.348C0 23.406.595 24 1.326 24h11.495v-9.294H9.691V11.08h3.13V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.765v2.316h3.592l-.467 3.626h-3.125V24h6.127C23.406 24 24 23.406 24 22.674V1.326C24 .595 23.406 0 22.675 0z"/></svg>
+                                  </a>
+                                <% } %>
+                                <% if (hasGoogle) { %>
+                                  <a href="/auth/google" title="Google" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:#DB4437;color:#fff;margin:0 6px;text-decoration:none;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 533.5 544.3" fill="currentColor" aria-hidden="true"><path d="M533.5 278.4c0-17.4-1.4-34.8-4.2-51.8H272v98.2h146.9c-6.4 34.7-26.5 64.2-56.4 83.9l91 70.6c53.3-49.2 79-121.6 79-200.9z"/><path d="M272 544.3c72.6 0 133.7-23.8 178.2-64.7l-91-70.6c-25.2 17-57.4 27.1-87.2 27.1-66.9 0-123.7-45.2-144-105.8l-94 72.5c41.5 82 125.4 141.5 238 141.5z"/><path d="M128 330.3c-10.1-30-10.1-62.7 0-92.7l-94-72.5c-40.5 80.6-40.5 157.1 0 237.7l94-72.5z"/><path d="M272 106.1c39.4-.6 77.5 14.2 106.5 41.3l79.8-79.8C408.3 22.5 346.8-1.1 272 0 159.4 0 75.5 59.5 34 141.1l94 72.5C148.2 153.1 205 106.1 272 106.1z"/></svg>
+                                  </a>
+                                <% } %>
+                              </div>
+                            <% } %>
 						</fieldset>
 					</form>
 				</div>

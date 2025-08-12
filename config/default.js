@@ -28,4 +28,18 @@ module.exports = {
   // di chuyển ảnh từ thư mục tạm về thư mục upload/products
   uploads: `${__dirname}/../src/public/uploads/`,
 
+  // OAuth providers
+  oauth: {
+    google: {
+      clientID: '',
+      clientSecret: '',
+      callbackURL: 'http://localhost:3000/auth/google/callback',
+    },
+    facebook: {
+      clientID: '',
+      clientSecret: '',
+      callbackURL: 'http://localhost:3000/auth/facebook/callback',
+    },
+  },
+
 };

@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser');
 const config = require('config');
 const userContext = require('./middlewares/userContext');
+const passport = require('passport');
+require('./services/passport');
 const app = express();
 
 
@@ -26,6 +28,10 @@ app.use(session(config.get('session')));
 
 // Middleware để tự động thêm thông tin user vào tất cả requests
 app.use(userContext);
+
+// Passport initialization
+app.use(passport.initialize());
+app.use(passport.session());
 
 //routers
 app.use(require(config.get('router')));

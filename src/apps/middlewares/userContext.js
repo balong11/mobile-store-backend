@@ -1,4 +1,5 @@
 const UserModel = require("../models/User");
+const SettingModel = require("../models/Setting");
 
 /**
  * Middleware để tự động thêm thông tin user vào res.locals
@@ -25,6 +26,14 @@ const userContext = async (req, res, next) => {
     
     // Thêm helper function để kiểm tra user có phải admin không
     res.locals.isAdmin = res.locals.user && res.locals.user.role === 1;
+    
+    // Load global settings for header/footer/logo
+    try {
+      const setting = await SettingModel.findOne();
+      res.locals.setting = setting || null;
+    } catch (err) {
+      res.locals.setting = null;
+    }
     
     next();
   } catch (error) {

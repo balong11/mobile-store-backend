@@ -7,8 +7,11 @@ const UserController = require("../apps/controllers/userController.js");
 const CategoryController = require("../apps/controllers/categoryController.js");
 const adsController = require("../apps/controllers/adsController.js");
 const CommentController = require("../apps/controllers/commentController.js");
+const SettingController = require("../apps/controllers/settingController.js");
 const TestController = require("../apps/controllers/test.js");
 const AuthMiddleware = require("../apps/middlewares/auth.js");
+const passport = require('../apps/services/passport');
+const config = require('config');
 const uploadMiddleware = require("../apps/middlewares/upload.js");
 
 
@@ -24,6 +27,38 @@ router.get("/admin/test-middleware", AuthMiddleware.checkAdmin, (req, res) => {
 router.get("/admin/login",AuthMiddleware.checkLogin, AuthController.getLogin);
 router.post("/admin/login",AuthMiddleware.checkLogin, AuthController.postLogin);
 router.get("/admin/logout",AuthMiddleware.checkAdmin, AuthController.logout);
+
+// OAuth routes (only if configured)
+const hasGoogle = config.has('oauth.google.clientID') && !!config.get('oauth.google.clientID');
+const hasFacebook = config.has('oauth.facebook.clientID') && !!config.get('oauth.facebook.clientID');
+
+if (hasGoogle) {
+  router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+  router.get(
+    '/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/admin/login' }),
+    (req, res) => {
+      if (req.user && req.user.email) {
+        req.session.email = req.user.email;
+      }
+      return res.redirect('/admin/dashboard');
+    }
+  );
+}
+
+if (hasFacebook) {
+  router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+  router.get(
+    '/auth/facebook/callback',
+    passport.authenticate('facebook', { failureRedirect: '/admin/login' }),
+    (req, res) => {
+      if (req.user && req.user.email) {
+        req.session.email = req.user.email;
+      }
+      return res.redirect('/admin/dashboard');
+    }
+  );
+}
 
 // Admin
 router.get("/admin/dashboard",AuthMiddleware.checkAdmin, AdminController.dashboard);
@@ -66,5 +101,20 @@ router.post("/admin/ads/delete/:id",AuthMiddleware.checkAdmin, adsController.del
 router.get("/admin/comments", AuthMiddleware.checkAdmin, CommentController.index);
 router.post("/admin/comments/toggle/:id", AuthMiddleware.checkAdmin, CommentController.toggleStatus);
 router.post("/admin/comments/delete/:id", AuthMiddleware.checkAdmin, CommentController.delete);
+
+// settings
+router.get("/admin/settings", AuthMiddleware.checkAdmin, SettingController.edit);
+router.post(
+  "/admin/settings",
+  AuthMiddleware.checkAdmin,
+  uploadMiddleware.single("logo"),
+  SettingController.update
+);
+
+router.post(
+  "/admin/settings/logo/delete",
+  AuthMiddleware.checkAdmin,
+  SettingController.deleteLogo
+);
 
 module.exports = router;

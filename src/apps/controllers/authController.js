@@ -1,15 +1,21 @@
 const User = require("../models/User");
+const config = require('config');
 
 exports.getLogin = async (req, res) => {
   // Kiểm tra cookie để tự động điền thông tin đăng nhập
   const rememberEmail = req.cookies.rememberEmail || '';
   const rememberPassword = req.cookies.rememberPassword || '';
   
+  const hasGoogle = config.has('oauth.google.clientID') && !!config.get('oauth.google.clientID');
+  const hasFacebook = config.has('oauth.facebook.clientID') && !!config.get('oauth.facebook.clientID');
+
   return res.render("admin/login", { 
     error: null, 
     currentPage: 'login',
     rememberEmail,
-    rememberPassword
+    rememberPassword,
+    hasGoogle,
+    hasFacebook
   });
 };
 
@@ -50,11 +56,16 @@ exports.postLogin = async (req, res) => {
     error = "email không hợp lệ"
   }
   
+  const hasGoogle = config.has('oauth.google.clientID') && !!config.get('oauth.google.clientID');
+  const hasFacebook = config.has('oauth.facebook.clientID') && !!config.get('oauth.facebook.clientID');
+
   return res.render("admin/login", {
     error, 
     currentPage: 'login',
     rememberEmail: email,
-    rememberPassword: password
+    rememberPassword: password,
+    hasGoogle,
+    hasFacebook
   })
 };
 
