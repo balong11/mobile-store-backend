@@ -26,6 +26,10 @@ exports.checkLogin = async (req, res, next) => {
   if (req.cookies.rememberEmail && req.cookies.rememberPassword) {
     return res.redirect('/admin/dashboard');
   }
+  // Kiểm tra cookie ghi nhớ
+  if (req.cookies.rememberEmail && req.cookies.rememberPassword) {
+    return res.redirect('/admin/dashboard');
+  }
   next();
 };
 

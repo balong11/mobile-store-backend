@@ -1,29 +1,20 @@
 const config = require("../../config/default");
 module.exports = (totalRows, page, limit) => {
+    
     const listPage = [];
     const delta = config.delta;
-    const totalPage = Math.ceil(totalRows / limit);
-    let left = Math.max(2, page - delta);
-    let right = Math.min(totalPage - 1, page + delta);
-
-    listPage.push(1);
-
-    if (left > 2) {
-        listPage.push('...');
+    const left = page - delta;
+    const right = page + delta;
+    for (let i = 1; i <= totalPage; i++) {
+        if (
+            i == 1 ||
+            i == totalPage ||
+            i == page ||
+            (i >= left && i<= right)
+        ) {
+            listPage.push(i);
+        }
     }
-
-    for (let i = left; i <= right; i++) {
-        listPage.push(i);
-    }
-
-    if (right < totalPage - 1) {
-        listPage.push('...');
-    }
-
-    if (totalPage > 1) {
-        listPage.push(totalPage);
-    }
-
     return listPage;
 }
-// [1, '...', 4, 5, 6, 7, '...', 10]
+//[1,...,4,5,6,7,...,10]
