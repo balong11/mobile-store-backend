@@ -29,7 +29,11 @@
 							</div>
 						<% } %>
 						
-						<form action="/admin/ads/store" method="POST">
+                        <form action="/admin/ads/store" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label>Ảnh quảng cáo</label>
+                                <input type="file" class="form-control" name="image" accept="image/*">
+                            </div>
 							<div class="form-group">
 								<label>Tiêu đề quảng cáo *</label>
 								<input type="text" class="form-control" name="title" required>

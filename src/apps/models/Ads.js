@@ -27,6 +27,10 @@ const adsSchema = new mongoose.Schema(
       enum: ['on', 'off'],
       default: 'on'
     },
+    image: {
+      type: String,
+      default: null
+    },
 
   },
   { timestamps: true }

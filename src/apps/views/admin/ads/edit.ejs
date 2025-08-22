@@ -29,7 +29,16 @@
 							</div>
 						<% } %>
 						
-						<form action="/admin/ads/update/<%= ads._id %>" method="POST">
+                        <form action="/admin/ads/update/<%= ads._id %>" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label>Ảnh quảng cáo</label>
+                                <% if (ads.image) { %>
+                                  <div style="margin-bottom:8px">
+                                    <img src="../uploads/<%= ads.image %>" alt="ads image" style="max-width:180px;border:1px solid #eee;border-radius:4px;" />
+                                  </div>
+                                <% } %>
+                                <input type="file" class="form-control" name="image" accept="image/*">
+                            </div>
 							<div class="form-group">
 								<label>Tiêu đề quảng cáo *</label>
 								<input type="text" class="form-control" name="title" value="<%= ads.title %>" required>

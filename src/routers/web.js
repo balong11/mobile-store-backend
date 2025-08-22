@@ -92,8 +92,8 @@ router.post("/admin/categories/delete/:id",AuthMiddleware.checkAdmin, CategoryCo
 //ads
 router.get("/admin/ads",AuthMiddleware.checkAdmin, adsController.index);
 router.get("/admin/ads/create",AuthMiddleware.checkAdmin, adsController.create);
-router.post("/admin/ads/store",AuthMiddleware.checkAdmin, adsController.store);
-router.post("/admin/ads/update/:id",AuthMiddleware.checkAdmin, adsController.update);
+router.post("/admin/ads/store",AuthMiddleware.checkAdmin, uploadMiddleware.single("image"), adsController.store);
+router.post("/admin/ads/update/:id",AuthMiddleware.checkAdmin, uploadMiddleware.single("image"), adsController.update);
 router.get("/admin/ads/edit/:id",AuthMiddleware.checkAdmin, adsController.edit);
 router.post("/admin/ads/delete/:id",AuthMiddleware.checkAdmin, adsController.delete);
 

@@ -1,6 +1,7 @@
 const AdsModel = require("../models/Ads");
 const paginate = require("../../commom/paginate");
 const config = require("../../../config/default");
+const fs = require("fs");
 
 exports.index = async (req, res) => {
   const limit = config.limit;
@@ -28,6 +29,7 @@ exports.create = async (req, res) => {
 
 exports.store = async (req, res) => {
   const body = req.body;
+  const file = req.file;
   
   if (!body) {
     return res.render("admin/ads/add", { error: "Không nhận được dữ liệu form!", currentPage: 'ads' });
@@ -40,7 +42,17 @@ exports.store = async (req, res) => {
     type: body.type,
     status: body.status,
   };
-  
+  // xử lý ảnh nếu có
+  if (file) {
+    const destDir = `${config.uploads}/ads`;
+    if (!fs.existsSync(destDir)) {
+      fs.mkdirSync(destDir, { recursive: true });
+    }
+    const originalname = file.originalname;
+    const relativePath = `ads/${originalname}`;
+    fs.renameSync(file.path, `${config.uploads}/${relativePath}`);
+    adsData.image = relativePath;
+  }
   await new AdsModel(adsData).save();
   res.redirect("/admin/ads");
 }
@@ -58,6 +70,7 @@ exports.edit = async (req, res) => {
 exports.update = async (req, res) => {
   const id = req.params.id;
   const body = req.body;
+  const file = req.file;
   
   const updateData = {
     title: body.title,
@@ -85,6 +98,17 @@ exports.update = async (req, res) => {
     });
   }
   
+  // cập nhật ảnh nếu có upload mới
+  if (file) {
+    const destDir = `${config.uploads}/ads`;
+    if (!fs.existsSync(destDir)) {
+      fs.mkdirSync(destDir, { recursive: true });
+    }
+    const originalname = file.originalname;
+    const relativePath = `ads/${originalname}`;
+    fs.renameSync(file.path, `${config.uploads}/${relativePath}`);
+    updateData.image = relativePath;
+  }
   await AdsModel.findByIdAndUpdate(id, updateData);
   res.redirect("/admin/ads");
 };
